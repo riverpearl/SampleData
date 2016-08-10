@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".FileActivity" />
-        <activity android:name=".ExternalActivity"></activity>
+        <activity android:name=".ExternalActivity" />
+        <activity android:name=".SharedActivity"></activity>
     </application>
 
 </manifest>
