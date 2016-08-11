@@ -21,7 +21,9 @@
         </activity>
         <activity android:name=".FileActivity" />
         <activity android:name=".ExternalActivity" />
-        <activity android:name=".SharedActivity"></activity>
+        <activity android:name=".SharedActivity" />
+        <activity android:name=".AddAddressActivity" />
+        <activity android:name=".AddressActivity"></activity>
     </application>
 
 </manifest>
