@@ -48,5 +48,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn = (Button)findViewById(R.id.btn_contact_activity);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
