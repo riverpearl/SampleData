@@ -25,7 +25,8 @@
         <activity android:name=".SharedActivity" />
         <activity android:name=".AddAddressActivity" />
         <activity android:name=".AddressActivity" />
-        <activity android:name=".ContactActivity"></activity>
+        <activity android:name=".ContactActivity" />
+        <activity android:name=".LoaderActivity"></activity>
     </application>
 
 </manifest>
