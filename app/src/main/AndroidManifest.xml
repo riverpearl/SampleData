@@ -27,7 +27,8 @@
         <activity android:name=".AddressActivity" />
         <activity android:name=".ContactActivity" />
         <activity android:name=".LoaderActivity" />
-        <activity android:name=".ImageViewActivity"></activity>
+        <activity android:name=".ImageViewActivity" />
+        <activity android:name=".ImageGetActivity"></activity>
     </application>
 
 </manifest>

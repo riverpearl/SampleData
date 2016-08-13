@@ -1,6 +1,8 @@
 package com.tacademy.sampledata;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.provider.MediaStore;
@@ -12,6 +14,9 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -21,6 +26,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageViewActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -39,12 +46,14 @@ public class ImageViewActivity extends AppCompatActivity implements LoaderManage
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
 
+        checkPermission();
+
         gridView = (GridView)findViewById(R.id.gridView);
 
         String[] from = { MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.DATA };
         int[] to = { R.id.text_name, R.id.image_icon };
 
-        cAdapter = new SimpleCursorAdapter(this, R.layout.view_image, null, from, to, 0);
+        cAdapter = new SimpleCursorAdapter(this, R.layout.view_image_check, null, from, to, 0);
         cAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
@@ -62,9 +71,41 @@ public class ImageViewActivity extends AppCompatActivity implements LoaderManage
         });
 
         gridView.setAdapter(cAdapter);
-        getSupportLoaderManager().initLoader(0, null, this);
+        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
 
-        checkPermission();
+        getSupportLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_image_check, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_finish) {
+            SparseBooleanArray array = gridView.getCheckedItemPositions();
+            List<String> files = new ArrayList<>();
+
+            for (int i = 0; i < array.size(); i++) {
+                int position = array.keyAt(i);
+
+                if (array.get(position)) {
+                    Cursor c = (Cursor)gridView.getItemAtPosition(position);
+                    String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
+                    files.add(path);
+                }
+            }
+
+            Intent intent = new Intent();
+            intent.putExtra("files", files.toArray(new String[files.size()]));
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
